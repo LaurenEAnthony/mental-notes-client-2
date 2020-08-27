@@ -10,11 +10,12 @@ import {
   CardText,
 } from "reactstrap";
 import CreateNote from "./CreateNote";
+import APIURL from "../helpers/environment";
 
 const NotesIndex = (props) => {
   const [notes, setNotes] = useState([]);
   const fetchNotes = () => {
-    fetch("http://localhost:3000/notes/display/default", {
+    fetch(`${APIURL}/notes/display/default`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
