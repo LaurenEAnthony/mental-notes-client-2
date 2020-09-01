@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Navigation from "./home/Navbar";
+// import Navigation from "./home/Navbar";
 import Auth from "./auth/Auth";
 import NotesIndex from "./main/NotesIndex";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   const [sessionToken, setSessionToken] = useState("");
@@ -25,7 +26,7 @@ function App() {
 
   const protectedViews = () => {
     return sessionToken === localStorage.getItem("token") ? (
-      <NotesIndex token={sessionToken} />
+      <NotesIndex token={sessionToken} clearToken={clearToken} />
     ) : (
       <Auth updateToken={updateToken} />
     );
@@ -33,8 +34,10 @@ function App() {
 
   return (
     <div className="App">
-      <Navigation clearToken={clearToken} />
-      {protectedViews()}
+      <Router>
+        {/* <Navigation clearToken={clearToken} /> */}
+        {protectedViews()}
+      </Router>
     </div>
   );
 }

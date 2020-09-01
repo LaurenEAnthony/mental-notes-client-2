@@ -1,34 +1,47 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
   NavbarToggler,
   Collapse,
   Nav,
+  NavLink,
   NavItem,
   Button,
 } from "reactstrap";
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => {
     let newIsOpen = !isOpen;
     setIsOpen(newIsOpen);
   };
 
   return (
-    <Navbar color="dark" dark expand="md">
-      <NavbarBrand href="/">Mental Notes</NavbarBrand>
-      <NavbarToggler onClick={toggle} />
-      <Collapse isOpen={isOpen}>
-        <Nav className="ml auto" navbar>
-          <NavItem>
-            <Button onClick={props.clickLogout}>Logout</Button>
-          </NavItem>
-        </Nav>
-      </Collapse>
-    </Navbar>
+    <>
+      <Navbar color="dark" dark expand="md">
+        <NavbarBrand href="/notes/display/default">Mental Notes</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="ml auto" navbar>
+            <NavItem>
+              <NavLink>
+                <Link to="/notes/display/default">Active Notes</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+                <Link to="/notes/display/all">All Notes</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <Button onClick={props.clearToken}>Logout</Button>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </>
   );
 };
 

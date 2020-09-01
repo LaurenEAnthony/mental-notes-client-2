@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Button,
-  Col,
-  Row,
-  CardFooter,
-  CardBody,
-  CardTitle,
-  CardText,
-} from "reactstrap";
+// import { Button, Col, Row } from "reactstrap";
+import { Route, Switch } from "react-router-dom";
 import CreateNote from "./CreateNote";
 import APIURL from "../helpers/environment";
+import DisplayAll from "./DisplayAll";
+import DisplayDefault from "./DisplayDefault";
+import Navigation from "../home/Navbar";
 
 const NotesIndex = (props) => {
   const [notes, setNotes] = useState([]);
+  const [updateActive, setUpdateActive] = useState(false);
+  const [noteToUpdate, setNoteToUpdate] = useState({});
+
   const fetchNotes = () => {
     fetch(`${APIURL}/notes/display/default`, {
       method: "GET",
@@ -25,7 +23,21 @@ const NotesIndex = (props) => {
       .then((res) => res.json())
       .then((noteData) => {
         setNotes(noteData);
+        console.log(noteData);
       });
+  };
+
+  const editUpdateNote = (note) => {
+    setNoteToUpdate(note);
+    console.log(note);
+  };
+
+  const updateOn = () => {
+    setUpdateActive(true);
+  };
+
+  const updateOff = () => {
+    setUpdateActive(false);
   };
 
   useEffect(() => {
@@ -34,41 +46,23 @@ const NotesIndex = (props) => {
 
   return (
     <div>
-      <CreateNote />
+      <Navigation clearToken={props.clearToken} />
+      <CreateNote fetchNotes={fetchNotes} token={props.token} />
       <div>
-        <Row>
-          <Col md="4" sm="6">
-            <Card>
-              <CardBody>
-                <CardTitle>Type of Note</CardTitle>
-                <CardText>This is where the text snippet will go...</CardText>
-                <Button>View Details</Button>
-              </CardBody>
-              <CardFooter className="text-muted">Date & Time Info</CardFooter>
-            </Card>
-          </Col>
-          <Col md="4" sm="6">
-            <Card>
-              <CardBody>
-                <CardTitle>Type of Note</CardTitle>
-                <CardText>This is where the text snippet will go...</CardText>
-                <Button>View Details</Button>
-                <Button>Archive</Button>
-              </CardBody>
-              <CardFooter className="text-muted">Date & Time Info</CardFooter>
-            </Card>
-          </Col>
-          <Col md="4" sm="6">
-            <Card>
-              <CardBody>
-                <CardTitle>Type of Note</CardTitle>
-                <CardText>This is where the text snippet will go...</CardText>
-                <Button>View Details</Button>
-              </CardBody>
-              <CardFooter className="text-muted">Date & Time Info</CardFooter>
-            </Card>
-          </Col>
-        </Row>
+        {/* <Switch>
+          <Route exact path="/notes/display/default"> */}
+        <DisplayDefault
+          notes={notes}
+          fetchNotes={fetchNotes}
+          editUpdateNote={editUpdateNote}
+          updateOn={updateOn}
+          token={props.token}
+        />
+        {/* </Route> */}
+        {/* <Route exact path="/notes/display/all"> */}
+        {/* <DisplayAll notes={notes} fetchNotes={fetchNotes} token={props.token} /> */}
+        {/* </Route> */}
+        {/* </Switch> */}
       </div>
     </div>
   );

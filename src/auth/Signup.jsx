@@ -30,6 +30,7 @@ const Signup = (props) => {
           <Input
             onChange={(e) => setEmail(e.target.value)}
             name="email"
+            type="email"
             value={email}
           />
         </FormGroup>
@@ -38,6 +39,8 @@ const Signup = (props) => {
           <Input
             onChange={(e) => setPassword(e.target.value)}
             name="password"
+            type="password"
+            minLength="5"
             value={password}
           />
         </FormGroup>
