@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import Navigation from "./home/Navbar";
+import Navigation from "./home/Navbar";
 import Auth from "./auth/Auth";
 import NotesIndex from "./main/NotesIndex";
+import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {/* <Navigation clearToken={clearToken} /> */}
+        <Navigation clearToken={clearToken} />
         {protectedViews()}
       </Router>
     </div>

@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Card,
-  Button,
   Col,
   Row,
   CardFooter,
@@ -20,10 +19,15 @@ const DisplayDefault = (props) => {
             <CardBody>
               <CardTitle>{note.type}</CardTitle>
               <CardText>{note.details}</CardText>
-              <EditNote noteToUpdate={note} />
+              <EditNote
+                noteToUpdate={note}
+                editUpdateNote={props.editUpdateNote}
+                fetchNotes={props.fetchNotes}
+                token={props.token}
+              />
             </CardBody>
             <CardFooter className="text-muted">
-              {note.date !== undefined ? note.date.split("T")[0] : <></>}
+              {note.date} at {note.time}
             </CardFooter>
           </Card>
         </Col>
@@ -33,41 +37,7 @@ const DisplayDefault = (props) => {
 
   return (
     <div>
-      <Row>
-        {noteCardMapping()}
-
-        {/* <Col md="4" sm="6">
-          <Card>
-            <CardBody>
-              <CardTitle>Type of Note</CardTitle>
-              <CardText>This is where the text snippet will go...</CardText>
-              <Button>View Details</Button>
-            </CardBody>
-            <CardFooter className="text-muted">Date & Time Info</CardFooter>
-          </Card>
-        </Col>
-        <Col md="4" sm="6">
-          <Card>
-            <CardBody>
-              <CardTitle>Type of Note</CardTitle>
-              <CardText>This is where the text snippet will go...</CardText>
-              <Button>View Details</Button>
-              <Button>Archive</Button>
-            </CardBody>
-            <CardFooter className="text-muted">Date & Time Info</CardFooter>
-          </Card>
-        </Col>
-        <Col md="4" sm="6">
-          <Card>
-            <CardBody>
-              <CardTitle>Type of Note</CardTitle>
-              <CardText>This is where the text snippet will go...</CardText>
-              <Button>View Details</Button>
-            </CardBody>
-            <CardFooter className="text-muted">Date & Time Info</CardFooter>
-          </Card>
-        </Col> */}
-      </Row>
+      <Row>{noteCardMapping()}</Row>
     </div>
   );
 };

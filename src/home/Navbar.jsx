@@ -20,7 +20,7 @@ const Navigation = (props) => {
 
   return (
     <>
-      <Navbar color="dark" dark expand="md">
+      <Navbar dark expand="md">
         <NavbarBrand href="/notes/display/default">Mental Notes</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -32,7 +32,7 @@ const Navigation = (props) => {
             </NavItem>
             <NavItem>
               <NavLink>
-                <Link to="/notes/display/all">All Notes</Link>
+                <Link to="/resources">Resources</Link>
               </NavLink>
             </NavItem>
             <NavItem>

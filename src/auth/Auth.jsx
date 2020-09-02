@@ -17,7 +17,6 @@ const Auth = (props) => {
   const toggleButton = isLogin ? "Create Account" : "Login";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const updateToken = props.updateToken;
 
   let handleSubmit = (event) => {
     event.preventDefault();

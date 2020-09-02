@@ -14,21 +14,18 @@ import APIURL from "../helpers/environment";
 const CreateNote = (props) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [type, setType] = useState("Event");
-  const [details, setDetails] = useState("test details");
-  const [thoughts, setThoughts] = useState("test thoughts");
-  const [emotion1, setEmotion1] = useState("Sad");
-  const [emotion2, setEmotion2] = useState("Sad");
-  const [emotion3, setEmotion3] = useState("Sad");
-  const [timing1, setTiming1] = useState("before");
-  const [timing2, setTiming2] = useState("during");
-  const [timing3, setTiming3] = useState("after");
-  const [intensity1, setIntensity1] = useState(5);
-  const [intensity2, setIntensity2] = useState(4);
-  const [intensity3, setIntensity3] = useState(2);
-  const [skillType, setSkillType] = useState("Exercise");
-  const [skillDetail, setSkillDetail] = useState("Skill Detail");
-  const [skillHelful, setSkillHelful] = useState(1);
+  const [type, setType] = useState("");
+  const [details, setDetails] = useState("");
+  const [thoughts, setThoughts] = useState("");
+  const [emotion1, setEmotion1] = useState("");
+  const [emotion2, setEmotion2] = useState("");
+  const [emotion3, setEmotion3] = useState("");
+  const [intensity1, setIntensity1] = useState();
+  const [intensity2, setIntensity2] = useState();
+  const [intensity3, setIntensity3] = useState();
+  const [skillType, setSkillType] = useState("");
+  const [skillDetail, setSkillDetail] = useState("");
+  const [skillHelpful, setSkillHelpful] = useState(true);
   const [active, setActive] = useState(true);
   const [modal, setModal] = useState(false);
 
@@ -41,21 +38,19 @@ const CreateNote = (props) => {
       body: JSON.stringify({
         note: {
           type: type,
-          // date: date + "T" + time,
+          date: date,
+          time: time,
           details: details,
           thoughts: thoughts,
           emotion1: emotion1,
-          timing1: timing1,
           intensity1: intensity1,
           emotion2: emotion2,
-          timing2: timing2,
           intensity2: intensity2,
           emotion3: emotion3,
-          timing3: timing3,
           intensity3: intensity3,
           skillType: skillType,
           skillDetail: skillDetail,
-          skillHelpful: skillHelful,
+          skillHelpful: skillHelpful,
           active: active,
         },
       }),
@@ -73,17 +68,14 @@ const CreateNote = (props) => {
         setDetails("");
         setThoughts("");
         setEmotion1("");
-        setTiming1("");
         setIntensity1("");
         setEmotion2("");
-        setTiming2("");
         setIntensity2("");
         setEmotion3("");
-        setTiming3("");
         setIntensity3("");
         setSkillType("");
         setSkillDetail("");
-        setSkillHelful("");
+        setSkillHelpful("");
         setActive(true);
         props.fetchNotes();
       });
@@ -91,7 +83,9 @@ const CreateNote = (props) => {
 
   return (
     <div>
-      <Button onClick={toggle}>Create a Note</Button>
+      <Button className="create-btn" onClick={toggle}>
+        Create a Note
+      </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader>New Note</ModalHeader>
         <ModalBody>
@@ -148,14 +142,7 @@ const CreateNote = (props) => {
             <FormGroup>
               <Label>Emotional State:</Label>
               <FormGroup check>
-                <Label htmlFor="emotion1">
-                  <Input
-                    type="checkbox"
-                    value={timing1}
-                    onChange={(e) => setTiming1("before")}
-                  />
-                  Before:
-                </Label>
+                <Label htmlFor="emotion1">Before:</Label>
                 <Input
                   name="emotion1"
                   value={emotion1}
@@ -169,6 +156,7 @@ const CreateNote = (props) => {
                   <option>Angry</option>
                   <option>Surprised</option>
                   <option>Anxious/Nervous</option>
+                  <option>Neutral</option>
                 </Input>
                 <Label htmlFor="intensity1">
                   Intensity: mild &rarr; extreme
@@ -181,14 +169,7 @@ const CreateNote = (props) => {
                   max="10"
                   onChange={(e) => setIntensity1(e.target.value)}
                 ></Input>
-                <Label htmlFor="emotion2">
-                  <Input
-                    type="checkbox"
-                    value={timing2}
-                    onChange={(e) => setTiming2(e.target.value)}
-                  />
-                  During:
-                </Label>
+                <Label htmlFor="emotion2">During:</Label>
                 <Input
                   name="emotion2"
                   value={emotion2}
@@ -202,6 +183,7 @@ const CreateNote = (props) => {
                   <option>Angry</option>
                   <option>Surprised</option>
                   <option>Anxious/Nervous</option>
+                  <option>Neutral</option>
                 </Input>
                 <Label htmlFor="intensity2">
                   Intensity: mild &rarr; extreme
@@ -214,14 +196,7 @@ const CreateNote = (props) => {
                   max="10"
                   onChange={(e) => setIntensity2(e.target.value)}
                 ></Input>
-                <Label htmlFor="emotion3">
-                  <Input
-                    type="checkbox"
-                    value={timing3}
-                    onChange={(e) => setTiming3(e.target.value)}
-                  />
-                  After:
-                </Label>
+                <Label htmlFor="emotion3">After:</Label>
                 <Input
                   name="emotion3"
                   value={emotion3}
@@ -235,6 +210,7 @@ const CreateNote = (props) => {
                   <option>Angry</option>
                   <option>Surprised</option>
                   <option>Anxious/Nervous</option>
+                  <option>Neutral</option>
                 </Input>
                 <Label htmlFor="intensity3">
                   Intensity: mild &rarr; extreme
@@ -275,17 +251,19 @@ const CreateNote = (props) => {
                 <FormGroup check>
                   <Label>
                     <Input
-                      name="skillHelful"
-                      value={skillHelful}
+                      name="skillHelpful"
+                      value={skillHelpful}
                       type="checkbox"
-                      onChange={(e) => setSkillHelful(e.target.value)}
+                      onChange={(e) => setSkillHelpful(e.target.value)}
                     />
                     Helpful?
                   </Label>
                 </FormGroup>
               </FormGroup>
             </FormGroup>
-            <Button type="submit">Create Note</Button>
+            <Button type="submit" onClick={toggle}>
+              Create Note
+            </Button>
           </Form>
         </ModalBody>
       </Modal>

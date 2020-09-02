@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
+import APIURL from "../helpers/environment";
 
 const EditNote = (props) => {
   const [editDate, setEditDate] = useState(props.noteToUpdate.date);
@@ -19,9 +20,6 @@ const EditNote = (props) => {
   const [editEmotion1, setEditEmotion1] = useState(props.noteToUpdate.emotion1);
   const [editEmotion2, setEditEmotion2] = useState(props.noteToUpdate.emotion2);
   const [editEmotion3, setEditEmotion3] = useState(props.noteToUpdate.emotion3);
-  const [editTiming1, setEditTiming1] = useState(props.noteToUpdate.timing1);
-  const [editTiming2, setEditTiming2] = useState(props.noteToUpdate.timing2);
-  const [editTiming3, setEditTiming3] = useState(props.noteToUpdate.timing3);
   const [editIntensity1, setEditIntensity1] = useState(
     props.noteToUpdate.intensity1
   );
@@ -42,15 +40,58 @@ const EditNote = (props) => {
   );
   const [editModal, setEditModal] = useState(false);
 
-  const toggle = () => setEditModal(!editModal);
+  const editToggle = () => setEditModal(!editModal);
+
+  const noteUpdate = (event) => {
+    event.preventDefault();
+    fetch(`${APIURL}/notes/update/${props.noteToUpdate.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        note: {
+          type: editType,
+          date: editDate,
+          time: editTime,
+          details: editDetails,
+          thoughts: editThoughts,
+          emotion1: editEmotion1,
+          intensity1: editIntensity1,
+          emotion2: editEmotion2,
+          intensity2: editIntensity2,
+          emotion3: editEmotion3,
+          intensity3: editIntensity3,
+          skillType: editSkillType,
+          skillDetail: editSkillDetail,
+          skillHelpful: editSkillHelpful,
+        },
+      }),
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: props.token,
+      }),
+    }).then((res) => {
+      props.fetchNotes();
+    });
+  };
+
+  const deleteNote = () => {
+    fetch(`${APIURL}/notes/delete/${props.noteToUpdate.id}`, {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: props.token,
+      }),
+    })
+      .then(() => props.fetchNotes())
+      .then({ editToggle });
+  };
 
   return (
     <div>
-      <Button onClick={toggle}>View Details/Edit</Button>
-      <Modal isOpen={editModal} toggle={toggle}>
-        <ModalHeader>New Note</ModalHeader>
+      <Button onClick={editToggle}>View Details/Edit</Button>
+      <Modal isOpen={editModal} toggle={editToggle}>
+        <ModalHeader>Update Note</ModalHeader>
         <ModalBody>
-          <Form>
+          <Form onSubmit={noteUpdate}>
             <FormGroup>
               <Label htmlFor="date">Date & Time: </Label>
               <Input
@@ -103,14 +144,7 @@ const EditNote = (props) => {
             <FormGroup>
               <Label>Emotional State:</Label>
               <FormGroup check>
-                <Label htmlFor="emotion1">
-                  <Input
-                    type="checkbox"
-                    value={editTiming1}
-                    onChange={(e) => setEditTiming1(e.target.value)}
-                  />
-                  Before:
-                </Label>
+                <Label htmlFor="emotion1">Before:</Label>
                 <Input
                   name="emotion1"
                   value={editEmotion1}
@@ -124,6 +158,7 @@ const EditNote = (props) => {
                   <option>Angry</option>
                   <option>Surprised</option>
                   <option>Anxious/Nervous</option>
+                  <option>Neutral</option>
                 </Input>
                 <Label htmlFor="intensity1">
                   Intensity: mild &rarr; extreme
@@ -136,14 +171,7 @@ const EditNote = (props) => {
                   max="10"
                   onChange={(e) => setEditIntensity1(e.target.value)}
                 ></Input>
-                <Label htmlFor="emotion2">
-                  <Input
-                    type="checkbox"
-                    value={editTiming2}
-                    onChange={(e) => setEditTiming2(e.target.value)}
-                  />
-                  During:
-                </Label>
+                <Label htmlFor="emotion2">During:</Label>
                 <Input
                   name="emotion2"
                   value={editEmotion2}
@@ -157,6 +185,7 @@ const EditNote = (props) => {
                   <option>Angry</option>
                   <option>Surprised</option>
                   <option>Anxious/Nervous</option>
+                  <option>Neutral</option>
                 </Input>
                 <Label htmlFor="intensity2">
                   Intensity: mild &rarr; extreme
@@ -169,14 +198,7 @@ const EditNote = (props) => {
                   max="10"
                   onChange={(e) => setEditIntensity2(e.target.value)}
                 ></Input>
-                <Label htmlFor="emotion3">
-                  <Input
-                    type="checkbox"
-                    value={editTiming3}
-                    onChange={(e) => setEditTiming3(e.target.value)}
-                  />
-                  After:
-                </Label>
+                <Label htmlFor="emotion3">After:</Label>
                 <Input
                   name="emotion3"
                   value={editEmotion3}
@@ -190,6 +212,7 @@ const EditNote = (props) => {
                   <option>Angry</option>
                   <option>Surprised</option>
                   <option>Anxious/Nervous</option>
+                  <option>Neutral</option>
                 </Input>
                 <Label htmlFor="intensity3">
                   Intensity: mild &rarr; extreme
@@ -240,7 +263,18 @@ const EditNote = (props) => {
                 </FormGroup>
               </FormGroup>
             </FormGroup>
-            <Button type="submit">Create Note</Button>
+            <Button type="submit" onClick={editToggle}>
+              Update Note
+            </Button>
+            <Button
+              type="submit"
+              color="danger"
+              onClick={() => {
+                deleteNote(props.noteToUpdate);
+              }}
+            >
+              Delete Note
+            </Button>
           </Form>
         </ModalBody>
       </Modal>

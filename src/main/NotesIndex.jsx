@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-// import { Button, Col, Row } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
 import CreateNote from "./CreateNote";
 import APIURL from "../helpers/environment";
-import DisplayAll from "./DisplayAll";
 import DisplayDefault from "./DisplayDefault";
-import Navigation from "../home/Navbar";
+import Resources from "../resources/Resources";
 
 const NotesIndex = (props) => {
   const [notes, setNotes] = useState([]);
-  const [updateActive, setUpdateActive] = useState(false);
   const [noteToUpdate, setNoteToUpdate] = useState({});
 
   const fetchNotes = () => {
@@ -32,38 +29,27 @@ const NotesIndex = (props) => {
     console.log(note);
   };
 
-  const updateOn = () => {
-    setUpdateActive(true);
-  };
-
-  const updateOff = () => {
-    setUpdateActive(false);
-  };
-
   useEffect(() => {
     fetchNotes();
   }, []);
 
   return (
     <div>
-      <Navigation clearToken={props.clearToken} />
-      <CreateNote fetchNotes={fetchNotes} token={props.token} />
-      <div>
-        {/* <Switch>
-          <Route exact path="/notes/display/default"> */}
-        <DisplayDefault
-          notes={notes}
-          fetchNotes={fetchNotes}
-          editUpdateNote={editUpdateNote}
-          updateOn={updateOn}
-          token={props.token}
-        />
-        {/* </Route> */}
-        {/* <Route exact path="/notes/display/all"> */}
-        {/* <DisplayAll notes={notes} fetchNotes={fetchNotes} token={props.token} /> */}
-        {/* </Route> */}
-        {/* </Switch> */}
-      </div>
+      <Switch>
+        <Route exact path="/notes/display/default">
+          <CreateNote fetchNotes={fetchNotes} token={props.token} />
+          <DisplayDefault
+            notes={notes}
+            fetchNotes={fetchNotes}
+            editUpdateNote={editUpdateNote}
+            noteToUpdate={noteToUpdate}
+            token={props.token}
+          />
+        </Route>
+        <Route exact path="/resources">
+          <Resources />
+        </Route>
+      </Switch>
     </div>
   );
 };
