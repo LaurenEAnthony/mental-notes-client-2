@@ -21,15 +21,15 @@ const Navigation = (props) => {
   return (
     <div>
       <Navbar light expand="md">
-        <NavbarBrand href="/notes/display/default">Mental Notes</NavbarBrand>
+        <NavbarBrand href="/">Mental Notes</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml auto" horizontal="right" navbar>
-            <NavItem>
+            {/* <NavItem>
               <NavLink>
-                <Link to="/notes/display/default">Active Notes</Link>
+                <Link to="/">Active Notes</Link>
               </NavLink>
-            </NavItem>
+            </NavItem> */}
             <NavItem>
               <NavLink>
                 <Link to="/resources">Resources</Link>

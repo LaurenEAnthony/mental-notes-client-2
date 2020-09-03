@@ -36,7 +36,7 @@ const NotesIndex = (props) => {
   return (
     <div>
       <Switch>
-        <Route exact path="/notes/display/default">
+        <Route exact path="/">
           <CreateNote fetchNotes={fetchNotes} token={props.token} />
           <DisplayDefault
             notes={notes}
