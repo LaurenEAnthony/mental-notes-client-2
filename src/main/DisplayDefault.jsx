@@ -8,7 +8,6 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
-import { classNames } from "classnames";
 import EditNote from "./EditNote";
 
 const DisplayDefault = (props) => {
