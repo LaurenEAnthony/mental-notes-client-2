@@ -57,8 +57,8 @@ const Auth = (props) => {
   return (
     <Container className="auth-container">
       <Row>
-        <Col md="6">
-          <h1>{title}</h1>
+        <Col xs={{ size: 10, offset: 1 }} md={{ size: 4, offset: 4 }}>
+          <h2>{title}</h2>
           <Form onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="email">Email</Label>

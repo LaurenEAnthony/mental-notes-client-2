@@ -19,12 +19,12 @@ const Navigation = (props) => {
   };
 
   return (
-    <>
-      <Navbar dark expand="md">
+    <div>
+      <Navbar light expand="md">
         <NavbarBrand href="/notes/display/default">Mental Notes</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml auto" navbar>
+          <Nav className="ml auto" horizontal="right" navbar>
             <NavItem>
               <NavLink>
                 <Link to="/notes/display/default">Active Notes</Link>
@@ -36,12 +36,14 @@ const Navigation = (props) => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <Button onClick={props.clearToken}>Logout</Button>
+              <Button className="logout-btn" onClick={props.clearToken}>
+                Logout
+              </Button>
             </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
-    </>
+    </div>
   );
 };
 

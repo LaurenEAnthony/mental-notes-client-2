@@ -80,9 +80,7 @@ const EditNote = (props) => {
         "Content-Type": "application/json",
         Authorization: props.token,
       }),
-    })
-      .then(() => props.fetchNotes())
-      .then({ editToggle });
+    }).then(() => props.fetchNotes());
   };
 
   return (
@@ -267,7 +265,6 @@ const EditNote = (props) => {
               Update Note
             </Button>
             <Button
-              type="submit"
               color="danger"
               onClick={() => {
                 deleteNote(props.noteToUpdate);

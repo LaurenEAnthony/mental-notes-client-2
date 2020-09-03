@@ -20,9 +20,9 @@ const CreateNote = (props) => {
   const [emotion1, setEmotion1] = useState("");
   const [emotion2, setEmotion2] = useState("");
   const [emotion3, setEmotion3] = useState("");
-  const [intensity1, setIntensity1] = useState();
-  const [intensity2, setIntensity2] = useState();
-  const [intensity3, setIntensity3] = useState();
+  const [intensity1, setIntensity1] = useState(null);
+  const [intensity2, setIntensity2] = useState(null);
+  const [intensity3, setIntensity3] = useState(null);
   const [skillType, setSkillType] = useState("");
   const [skillDetail, setSkillDetail] = useState("");
   const [skillHelpful, setSkillHelpful] = useState(true);
@@ -68,11 +68,11 @@ const CreateNote = (props) => {
         setDetails("");
         setThoughts("");
         setEmotion1("");
-        setIntensity1("");
+        setIntensity1(null);
         setEmotion2("");
-        setIntensity2("");
+        setIntensity2(null);
         setEmotion3("");
-        setIntensity3("");
+        setIntensity3(null);
         setSkillType("");
         setSkillDetail("");
         setSkillHelpful("");
