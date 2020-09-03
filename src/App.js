@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navigation clearToken={clearToken} />
+        <Navigation token={sessionToken} clearToken={clearToken} />
         {protectedViews()}
       </Router>
     </div>

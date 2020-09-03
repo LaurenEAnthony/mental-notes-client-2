@@ -13,6 +13,7 @@ import {
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const toggle = () => {
     let newIsOpen = !isOpen;
     setIsOpen(newIsOpen);
@@ -25,20 +26,19 @@ const Navigation = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml auto" horizontal="right" navbar>
-            {/* <NavItem>
-              <NavLink>
-                <Link to="/">Active Notes</Link>
-              </NavLink>
-            </NavItem> */}
             <NavItem>
               <NavLink>
                 <Link to="/resources">Resources</Link>
               </NavLink>
             </NavItem>
             <NavItem>
-              <Button className="logout-btn" onClick={props.clearToken}>
-                Logout
-              </Button>
+              {!props.token ? (
+                <></>
+              ) : (
+                <Button className="logout-btn" onClick={props.clearToken}>
+                  Logout
+                </Button>
+              )}
             </NavItem>
           </Nav>
         </Collapse>
